@@ -1,5 +1,14 @@
-Prints "Hello, World!" with a hello function.
+Rest API to return incoming headers
 [//]: # (above is the package summary)
 
 # Package Overview
-Prints "Hello, World!" as the output to the command line using a hello function.
+Test the API
+
+curl -i http://localhost:9090/headers/echo \
+  -H "X-Custom-Header: test123" \
+  -H "Authorization: Basic dXNlcjpwYXNz"
+
+curl -i -X POST http://localhost:9090/headers/echo \
+  -H "Content-Type: application/json" \
+  -H "X-Custom-Header: test123" \
+  -d '{"foo": "bar"}'
