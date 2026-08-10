@@ -6,7 +6,7 @@ Test the API
 
 curl -i http://localhost:9090/headers/echo \
   -H "X-Custom-Header: test123" \
-  -H "Authorization: Basic dXNlcjpwYXNz"
+  -H "Authorization: Basic test"
 
 curl -i -X POST http://localhost:9090/headers/echo \
   -H "Content-Type: application/json" \
