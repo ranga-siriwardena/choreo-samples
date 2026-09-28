@@ -25,4 +25,11 @@
       }
     }
 
+## Sample CURL command to test inside Choreo 
+    curl -s -X POST 'https:temp-host-url-from-choreo-console/ranga-us/ballerina-graphql/v1.0' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H "Test-Key: $TOKEN" \
+  -d '{"query":"{ libraryName books { id title publishedYear genre author { name country } } }"}' | jq
+
 Note: data is in-memory, so it resets on each restart/replica. Subscriptions are not included.
