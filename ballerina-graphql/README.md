@@ -13,6 +13,25 @@
 4. **Build**, then **Deploy** to Development. Set the `libraryName` configurable if you want.
 5. Test from the **Test -> GraphQL Console**, or publish via the Developer Portal and call it with a token.
 
+## Test with curl after deploying
+Copy the invoke URL from **Test -> Console** in Choreo. It ends in `/v1.0`, for example:
+`https://<org-id>-dev.<region>.choreoapis.dev/<project>/<component>/v1.0`
+
+    export URL='<invoke-url-from-choreo-test-console>'
+    export TOKEN='<test-key-from-choreo-test-console>'
+
+    curl -s -X POST "$URL" \
+      -H 'Content-Type: application/json' \
+      -H 'Accept: application/json' \
+      -H "Test-Key: $TOKEN" \
+      -d '{"query":"{ libraryName books { id title publishedYear genre author { name country } } }"}' | jq
+
+Common mistakes:
+- Use **POST**, not GET. The gateway returns 404 "The requested resource is not available" for GET.
+- Don't append `/graphql` to the invoke URL; Choreo already maps it to the service's `/graphql` base path.
+- Put the `Test-Key` header in double quotes so `$TOKEN` expands.
+- Include `Content-Type: application/json`.
+
 ## Sample operations
     query {
       libraryName
@@ -24,12 +43,5 @@
         id title author { name }
       }
     }
-
-## Sample CURL command to test inside Choreo 
-    curl -s -X POST 'https:temp-host-url-from-choreo-console/ranga-us/ballerina-graphql/v1.0' 
-  -H 'Content-Type: application/json' 
-  -H 'Accept: application/json' 
-  -H "Test-Key: $TOKEN" 
-  -d '{"query":"{ libraryName books { id title publishedYear genre author { name country } } }"}' | jq
 
 Note: data is in-memory, so it resets on each restart/replica. Subscriptions are not included.
