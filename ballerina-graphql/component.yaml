@@ -1,0 +1,12 @@
+# Choreo component descriptor: exposes the Ballerina GraphQL listener as a GraphQL endpoint.
+schemaVersion: "1.2"
+endpoints:
+  - name: library-graphql
+    displayName: Library GraphQL API
+    service:
+      basePath: /graphql
+      port: 9090
+    type: GraphQL
+    networkVisibilities:
+      - Public
+      - Organization

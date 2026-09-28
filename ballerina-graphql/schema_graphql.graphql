@@ -1,0 +1,72 @@
+type Query {
+  ""
+  libraryName: String!
+  "Lists books, optionally filtered."
+  books(
+    "Filter by genre"
+    genre: Genre
+    "Filter by author ID"
+    authorId: String
+  ): [Book!]!
+  ""
+  book(
+    "Book ID"
+    id: String!
+  ): Book
+  ""
+  authors: [Author!]!
+}
+
+"A book in the library. Modelled as a service class so `author` is resolved lazily."
+type Book {
+  ""
+  id: String!
+  ""
+  title: String!
+  ""
+  publishedYear: Int!
+  ""
+  genre: Genre!
+  ""
+  author: Author
+}
+
+"Genre of a book."
+enum Genre {
+  HISTORY
+  TECHNOLOGY
+  SCIENCE
+  NON_FICTION
+  FICTION
+}
+
+"An author in the library."
+type Author {
+  "Unique author identifier"
+  id: String!
+  "Full name of the author"
+  name: String!
+  "Country of origin"
+  country: String!
+}
+
+type Mutation {
+  "Adds a new book."
+  addBook(
+    "Book details"
+    input: BookInput!
+  ): Book!
+  "Deletes a book."
+  deleteBook(
+    "Book ID"
+    id: String!
+  ): Book!
+}
+
+"Input used by the `addBook` mutation."
+input BookInput {
+  title: String!
+  publishedYear: Int!
+  genre: Genre!
+  authorId: String!
+}
